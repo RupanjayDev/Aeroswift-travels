@@ -1,0 +1,366 @@
+@import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "El Messiri", sans-serif;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #000000;
+  color: #222;
+  line-height: 1.6;
+}
+
+.center-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.justify-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-color {
+  background: #0c1b36;
+  color: #fff;
+  width: 100%;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(214, 178, 76, 0.25);
+}
+
+.container-fluid a {
+  color: #d6b24c;
+  font-weight: bold;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+nav ul li a.active {
+  background: #28a745;
+  font-weight: bold;
+}
+
+.hero {
+  background: #f6f0e6;
+  width: 100%;
+  margin: 0;
+  padding: 40px 15px;
+  min-height: 500px;
+}
+
+.btn-color {
+  background-color: #1ab27b;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-color:hover {
+  background-color: #158f63;
+  transform: translateY(-2px);
+}
+
+.hero-text h1 {
+  font-weight: bold;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.hero-gradient-text {
+  background: -webkit-linear-gradient(
+    #0f172a,
+    /* navy */ #1abc9c /* teal/emerald */
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+  font-weight: bold;
+  display: block;
+  margin: 15px 0;
+}
+
+.hero img {
+  max-width: 100%;
+  height: auto;
+  border: 4px solid #d6b24c;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.destination-section {
+  background: #d1bfa8;
+  width: 100%;
+  padding: 50px 15px;
+}
+
+.destination-section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: bold;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.destinations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  max-width: 1600px; /* Increase max width for large screens */
+  margin: 0 auto;
+}
+
+.destination-card {
+  background: #fff;
+  padding: 20px;
+  border: 2px solid #d6b24c;
+  text-align: center;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.destination-card p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.destination-card strong {
+  color: #1ab27b;
+  font-size: 1.3rem;
+}
+
+.testimonial-section {
+  background: #1d2535;
+  color: #fff;
+  text-align: center;
+  padding: 60px 15px;
+  width: 100%;
+}
+
+.testimonial-section h2 {
+  margin-bottom: 40px;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.carousel-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.carousel-content h3 {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+  margin-bottom: 20px;
+  color: #d6b24c;
+}
+
+.carousel-content p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.7;
+}
+
+.marketing {
+  background-color: #a4af94;
+  width: 100%;
+  padding: 60px 15px;
+}
+
+.marketing h2 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  margin-bottom: 40px;
+}
+
+.featurette-divider {
+  margin: 3rem 0;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.featurette-heading {
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin-bottom: 20px;
+}
+
+.lead {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.placeholder-svg {
+  background: #f8f9fa;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+}
+
+.info-section {
+  background: linear-gradient(135deg, #396960, #173648);
+  color: #fff;
+  width: 100%;
+  padding: 60px 15px;
+}
+
+.info-cards {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 2px solid #d6b24c;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+}
+
+.info-card h5 {
+  color: #f8e08e;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+footer {
+  background: #0c1b36;
+  padding: 40px 15px 20px;
+}
+
+footer .nav-link {
+  color: #d6b24c !important;
+  transition: color 0.3s ease;
+}
+
+footer .nav-link:hover {
+  color: #fff !important;
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+  .navbar-brand {
+    font-size: 1.5rem !important;
+  }
+
+  .hero {
+    padding: 30px 15px;
+  }
+
+  .hero .row {
+    flex-direction: column-reverse;
+  }
+
+  .destinations {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .carousel-control-prev,
+  .carousel-control-next {
+    width: 40px;
+  }
+
+  .featurette {
+    text-align: center;
+  }
+
+  .featurette .col-md-7,
+  .featurette .col-md-5 {
+    margin-bottom: 20px;
+  }
+
+  .info-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .btn-lg {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .container-fluid {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .hero,
+  .destination-section,
+  .testimonial-section,
+  .marketing,
+  .info-section {
+    padding: 30px 10px;
+  }
+
+  .destinations {
+    gap: 15px;
+  }
+
+  .carousel-item {
+    padding: 20px 10px;
+    min-height: 200px;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+
+  .btn-lg {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+/* Fix for Bootstrap responsive utilities */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background: rgba(12, 27, 54, 0.95);
+    margin-top: 10px;
+    border-radius: 8px;
+    padding: 15px;
+  }
+}

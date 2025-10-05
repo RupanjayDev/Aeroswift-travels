@@ -1,0 +1,295 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flight Booking - Home</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./src/CSS/index.css" />
+  </head>
+  <body>
+    <nav class="nav-color navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a style="color: #d6b24c" class="navbar-brand fw-bold fs-1" href="#"
+          >AEROSWIFT</a
+        >
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
+            <li class="nav-item">
+              <a style="color: #d6b24c" class="fw-normal nav-link" href="/"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                style="color: #d6b24c"
+                class="fw-normal nav-link"
+                href="/dashboard"
+                >Dashboard</a
+              >
+            </li>
+
+            <li class="nav-item">
+              <a
+                style="color: #d6b24c"
+                class="fw-normal nav-link"
+                href="/flight-details"
+                >Flight Details</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero">
+      <div class="container-fluid">
+        <div class="row align-items-center g-4 py-3 text-center text-lg-start">
+          <div class="col-12">
+            <img
+              style="width: 100%; height: 60vh; object-fit: cover"
+              src="./public/image.png"
+              class="d-block mx-auto img-fluid"
+              alt="Sacred Journey"
+              loading="lazy"
+            />
+          </div>
+          <div class="col-12">
+            <h3
+              class="display-2 fw-bold lh-1 mb-3 hero-gradient-text text-center"
+            >
+              AEROSWIFT TOURS & TRAVELS
+            </h3>
+            <h3 class="display-6 fw-bold lh-1 mb-3 text-center">
+              YOUR SACRED JOURNEY AWAITS...<br />Hajj & Umra Services
+            </h3>
+            <p class="lead text-center">
+              Embark on your spiritual journey with our comprehensive Hajj and
+              Umrah services. We provide seamless travel arrangements,
+              comfortable accommodations, and guided tours to make your
+              pilgrimage memorable and meaningful.
+            </p>
+            <div class="d-flex justify-content-center mt-3">
+              <button
+                type="button"
+                class="text-light btn btn-color btn-lg px-4"
+                onclick="loadBookingModal()"
+              >
+                FIND A FLIGHT
+              </button>
+
+              <div id="modalContainer"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Popular Destinations -->
+    <section class="destination-section">
+      <div class="container-fluid">
+        <h2 class="text-center mb-4">POPULAR DESTINATIONS</h2>
+        <div class="destinations" id="destinationsContainer">
+          <!-- Destinations will be injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Customer Reviews Carousel -->
+    <div
+      id="carouselExampleIndicators"
+      class="testimonial-section carousel slide"
+      data-bs-ride="carousel"
+    >
+      <div class="carousel-inner" id="reviewsCarousel">
+        <h2 class="d-flex justify-content-center mb-4">
+          WHAT OUR CUSTOMERS SAY
+        </h2>
+        <!-- Reviews will be injected by JS -->
+      </div>
+
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carouselExampleIndicators"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <div class="marketing">
+      <div class="container">
+        <div class="text-center mb-5">
+          <h2>OUR FEATURES</h2>
+        </div>
+
+        <hr class="my-5" />
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">
+              Sacred Sites Access.
+              <span class="text-body-secondary">Spiritually enriching.</span>
+            </h2>
+            <p class="lead">
+              Gain exclusive access to the most sacred sites with our specially
+              arranged tours and visits, making your pilgrimage truly meaningful
+              and memorable.
+            </p>
+          </div>
+          <div class="col-md-5">
+            <div
+              class="placeholder-svg d-flex align-items-center justify-content-center"
+              style="height: 200px"
+            >
+              <span class="text-muted">Sacred Sites</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-5" />
+
+        <div class="row featurette">
+          <div class="col-md-7 order-md-2">
+            <h2 class="featurette-heading fw-normal lh-1">
+              24/7 Support Service.
+              <span class="text-body-secondary">Always there for you.</span>
+            </h2>
+            <p class="lead">
+              Our dedicated support team is available round the clock to assist
+              you throughout your journey, ensuring peace of mind and smooth
+              travel experience.
+            </p>
+          </div>
+          <div class="col-md-5 order-md-1">
+            <div
+              class="placeholder-svg d-flex align-items-center justify-content-center"
+              style="height: 200px"
+            >
+              <span class="text-muted">24/7 Support</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="my-5" />
+
+        <div class="row featurette">
+          <div class="col-md-7">
+            <h2 class="featurette-heading fw-normal lh-1">
+              Customized Itineraries.
+              <span class="text-body-secondary">Tailored for you.</span>
+            </h2>
+            <p class="lead">
+              Every pilgrimage is unique. We create personalized itineraries
+              that cater to your specific needs, preferences, and spiritual
+              goals for the perfect journey.
+            </p>
+          </div>
+          <div class="col-md-5">
+            <div
+              class="placeholder-svg d-flex align-items-center justify-content-center"
+              style="height: 200px"
+            >
+              <span class="text-muted">Custom Plans</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="info-section">
+      <div class="container-fluid">
+        <div class="info-cards">
+          <div class="info-card">
+            <div class="card-header bg-transparent border-0 pb-0">
+              <h5 class="card-title mb-0">Premium Services</h5>
+            </div>
+            <div class="card-body px-0">
+              <p class="card-text">
+                Experience luxury accommodations and premium services designed
+                to make your spiritual journey comfortable and memorable.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="card-header bg-transparent border-0 pb-0">
+              <h5 class="card-title mb-0">Expert Guidance</h5>
+            </div>
+            <div class="card-body px-0">
+              <p class="card-text">
+                Our knowledgeable guides provide spiritual insights and
+                practical assistance throughout your pilgrimage journey.
+              </p>
+            </div>
+          </div>
+
+          <div class="info-card">
+            <div class="card-header bg-transparent border-0 pb-0">
+              <h5 class="card-title mb-0">Trusted Service</h5>
+            </div>
+            <div class="card-body px-0">
+              <p class="card-text">
+                With years of experience and thousands of satisfied pilgrims, we
+                are your trusted partner for Hajj and Umrah services.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="py-4 text-light">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <li class="nav-item">
+          <a href="#" class="nav-link px-3">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-3">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-3">FAQs</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link px-3">About</a>
+        </li>
+      </ul>
+      <p class="text-center mb-0">© 2025 Aeroswift. All rights reserved.</p>
+    </footer>
+
+    <script type="module" src="src/javascript/main.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

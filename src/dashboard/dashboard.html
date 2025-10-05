@@ -1,0 +1,254 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aeroswift Dashboard</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./dashboard.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="nav-color navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a style="color: #d6b24c" class="navbar-brand fw-bold" href="/"
+          >AEROSWIFT</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
+            <li class="nav-item">
+              <a style="color: #d6b24c" class="nav-link" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a
+                style="color: #d6b24c"
+                class="nav-link active"
+                href="/dashboard"
+                >Dashboard</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Top Section -->
+    <div class="container section1 mt-5">
+      <div class="row justify-content-center g-4 text-center" style="padding: 20px">
+        <!-- Umra Services -->
+        <div
+          class="pcol-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
+        >
+          <a
+            class="btn btn-primary border bg-transparent fw-bold fs-4 d-flex align-items-center justify-content-center gap-2 w-100"
+            style="color: #d6b24c"
+            data-bs-toggle="collapse"
+            href="#collapseExample"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample"
+          >
+            Umra services
+            <img
+              src="/public/person.svg"
+              class="icon-animate"
+              alt="Umra services"
+            />
+          </a>
+
+          <div class="collapse" id="collapseExample">
+            <div class="card card-body mt-3">Details about Umra services.</div>
+          </div>
+        </div>
+
+        <!-- Flight Tickets -->
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
+        >
+          <a
+            class="btn btn-primary border bg-transparent fw-bold fs-4 d-flex align-items-center justify-content-center gap-2 w-100"
+            style="color: #d6b24c"
+            data-bs-toggle="collapse"
+            href="#collapseExample2"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample2"
+          >
+            Flight tickets
+            <img
+              src="/public/plane.svg"
+              class="icon-animate"
+              alt="Flight tickets"
+            />
+          </a>
+
+          <div class="collapse" id="collapseExample2">
+            <div class="card card-body mt-3">Information about flight booking.</div>
+          </div>
+        </div>
+
+        <!-- Visa Attestation -->
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
+        >
+          <a
+            class="btn btn-primary border bg-transparent fw-bold fs-4 d-flex align-items-center justify-content-center gap-2 w-100"
+            style="color: #d6b24c"
+            data-bs-toggle="collapse"
+            href="#collapseExample3"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapseExample3"
+          >
+            Visa attestation
+            <img
+              src="/public/visa.svg"
+              class="icon-animate"
+              alt="Visa attestation"
+            />
+          </a>
+
+          <div class="collapse" id="collapseExample3">
+            <div class="card card-body">
+              Visa and attestation service details.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="container mt-4 mb-5">
+      <div class="card w-100">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs" id="dashboardTabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="#" data-target="tabBookings"
+                >Bookings</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="tabQuickActions"
+                >Quick Actions</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="tabDisabled"
+                >Disabled</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="card-body" style="max-height: 500px; overflow-y: auto">
+          <div id="tabBookings" class="tab-content">
+            <h5>All bookings will be shown here</h5>
+            <div
+              id="bookingsContainer"
+              class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-3"
+            >
+              <!-- Booking cards dynamically added -->
+            </div>
+          </div>
+
+          <div id="tabQuickActions" class="tab-content" style="display: none">
+            <div class="container my-3">
+              <h4>Manage Destinations</h4>
+              <form id="destinationForm" class="mb-3">
+                <div class="row g-2">
+                  <div class="col-12 col-sm-6 col-md-4">
+                    <input
+                      type="text"
+                      placeholder="Title"
+                      id="destTitle"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4">
+                    <input
+                      type="text"
+                      placeholder="Price"
+                      id="destPrice"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-4">
+                    <input
+                      type="text"
+                      placeholder="Image URL"
+                      id="destImage"
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3 w-100">
+                  Add Destination
+                </button>
+              </form>
+              <ul id="destList" class="list-group"></ul>
+            </div>
+
+            <div class="container my-4">
+              <h4>Manage Reviews</h4>
+              <form id="reviewForm" class="mb-3">
+                <input type="text" placeholder="Name" id="revName" required />
+                <input
+                  type="text"
+                  placeholder="Image URL"
+                  id="revImage"
+                  required
+                />
+                <textarea
+                  placeholder="Review Text"
+                  id="revText"
+                  required
+                ></textarea>
+                <button type="submit" class="btn btn-success mt-2 w-100">
+                  Add Review
+                </button>
+              </form>
+              <ul id="revList" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-4 text-light text-center">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3 flex-wrap">
+        <li class="nav-item"><a href="#" class="nav-link px-3">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-3">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-3">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-3">About</a></li>
+      </ul>
+      <p class="mb-0">© 2025 Aeroswift. All rights reserved.</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="/javascript/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+[
+  {
+    "fullName": "manoj",
+    "passportNumber": "32829829",
+    "nationality": "brazil",
+    "contactNumber": "2842759758091",
+    "departureCity": "qatar",
+    "destinationCity": "Medina",
+    "departureDate": "2025-10-09",
+    "returnDate": "2025-10-22",
+    "passengers": "1",
+    "specialRequests": "",
+    "createdAt": "2025-10-05T07:14:27.896Z"
+  },
+  {
+    "fullName": "billa",
+    "passportNumber": "skknv",
+    "nationality": "lsekvvls",
+    "contactNumber": "slkvnl",
+    "departureCity": "sjnkvs",
+    "destinationCity": "Jeddah",
+    "departureDate": "2025-11-06",
+    "returnDate": "",
+    "passengers": "1",
+    "specialRequests": "",
+    "createdAt": "2025-10-05T07:20:45.094Z"
+  }
+]
