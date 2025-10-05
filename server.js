@@ -1,7 +1,7 @@
-// server.js
-
+// server.js with MongoDB
 import express from "express";
-import fs from "fs";
+import { MongoClient, ObjectId } from "mongodb";
+import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -10,18 +10,47 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(process.cwd(), "data/bookings.json");
+
+// MongoDB connection string (from environment variable or hardcoded for testing)
+const MONGODB_URI = process.env.MONGODB_URI || "your-mongodb-connection-string-here";
+const DB_NAME = "flightBookingDB";
+
+let db;
+let bookingsCollection;
+let destinationsCollection;
+let reviewsCollection;
+
+// Connect to MongoDB
+async function connectDB() {
+  try {
+    const client = new MongoClient(MONGODB_URI);
+    await client.connect();
+    console.log("✅ Connected to MongoDB");
+    
+    db = client.db(DB_NAME);
+    bookingsCollection = db.collection("bookings");
+    destinationsCollection = db.collection("destinations");
+    reviewsCollection = db.collection("reviews");
+    
+    // Create indexes for better performance
+    await bookingsCollection.createIndex({ createdAt: -1 });
+    await destinationsCollection.createIndex({ id: 1 });
+    await reviewsCollection.createIndex({ id: 1 });
+    
+  } catch (err) {
+    console.error("❌ MongoDB connection error:", err);
+    process.exit(1);
+  }
+}
 
 // Middleware
-app.use(express.json()); // so we can parse JSON bodies
+app.use(cors());
+app.use(express.json());
 
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 app.use("/css", express.static(path.join(__dirname, "src", "CSS")));
-app.use(
-  "/javascript",
-  express.static(path.join(__dirname, "src", "javascript"))
-);
+app.use("/javascript", express.static(path.join(__dirname, "src", "javascript")));
 app.use("/dashboard", express.static(path.join(__dirname, "src", "dashboard")));
 app.use("/pages", express.static(path.join(__dirname, "src", "pages")));
 
@@ -34,131 +63,165 @@ app.get("/booking", (req, res) =>
   res.sendFile(path.join(__dirname, "src", "pages", "booking", "booking.html"))
 );
 app.get("/flight-details", (req, res) =>
-  res.sendFile(
-    path.join(__dirname, "src", "pages", "flightDetails", "flight-details.html")
-  )
+  res.sendFile(path.join(__dirname, "src", "pages", "flightDetails", "flight-details.html"))
 );
 
-// -----------------------------
-// API ROUTE for saving bookings
-// -----------------------------
-app.post("/api/bookings", (req, res) => {
-  const filePath = path.join(__dirname, "bookings.json");
-  let bookings = [];
-
-  if (fs.existsSync(filePath)) {
-    bookings = JSON.parse(fs.readFileSync(filePath));
-  }
-
-  const newBooking = { ...req.body, createdAt: new Date().toISOString() };
-  bookings.push(newBooking);
-
-  fs.writeFileSync(filePath, JSON.stringify(bookings, null, 2));
-
-  res.json({ message: "Booking saved successfully", booking: newBooking });
+// Health check
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok", db: db ? "connected" : "disconnected" });
 });
-
-// API to get bookings
-app.get("/api/bookings", (req, res) => {
-  const filePath = path.join(__dirname, "bookings.json");
-
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      // If file doesn't exist, return empty array
-      return res.json([]);
-    }
-
-    try {
-      const bookings = JSON.parse(data);
-      res.json(bookings);
-    } catch (error) {
-      res.status(500).json({ error: "Failed to parse JSON" });
-    }
-  });
-});
-
-
-// Helper to read/write JSON file
-function readData() {
-  const data = fs.readFileSync(DATA_FILE, "utf-8");
-  return JSON.parse(data);
-}
-
-function writeData(data) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
-}
 
 // =============== BOOKINGS =================
-app.get("/api/bookings", (req, res) => {
-  const data = readData();
-  res.json(data.bookings || []);
+app.get("/api/bookings", async (req, res) => {
+  try {
+    const bookings = await bookingsCollection.find({}).sort({ createdAt: -1 }).toArray();
+    res.json(bookings);
+  } catch (err) {
+    console.error("Error fetching bookings:", err);
+    res.status(500).json({ error: "Failed to fetch bookings" });
+  }
+});
+
+app.post("/api/bookings", async (req, res) => {
+  try {
+    const newBooking = {
+      ...req.body,
+      createdAt: new Date().toISOString()
+    };
+    const result = await bookingsCollection.insertOne(newBooking);
+    res.json({ 
+      message: "Booking saved successfully", 
+      booking: { ...newBooking, _id: result.insertedId }
+    });
+  } catch (err) {
+    console.error("Error creating booking:", err);
+    res.status(500).json({ error: "Failed to create booking" });
+  }
+});
+
+app.delete("/api/bookings/:id", async (req, res) => {
+  try {
+    await bookingsCollection.deleteOne({ _id: new ObjectId(req.params.id) });
+    res.json({ message: "Booking deleted" });
+  } catch (err) {
+    console.error("Error deleting booking:", err);
+    res.status(500).json({ error: "Failed to delete booking" });
+  }
 });
 
 // =============== DESTINATIONS ==============
-app.get("/api/destinations", (req, res) => {
-  const data = readData();
-  res.json(data.destinations || []);
+app.get("/api/destinations", async (req, res) => {
+  try {
+    const destinations = await destinationsCollection.find({}).toArray();
+    res.json(destinations);
+  } catch (err) {
+    console.error("Error fetching destinations:", err);
+    res.status(500).json({ error: "Failed to fetch destinations" });
+  }
 });
 
-app.post("/api/destinations", (req, res) => {
-  const data = readData();
-  const newDest = { id: Date.now(), ...req.body };
-  data.destinations.push(newDest);
-  writeData(data);
-  res.json({ message: "Destination added", newDest });
+app.post("/api/destinations", async (req, res) => {
+  try {
+    const newDest = {
+      id: Date.now(),
+      ...req.body
+    };
+    await destinationsCollection.insertOne(newDest);
+    res.json({ message: "Destination added", destination: newDest });
+  } catch (err) {
+    console.error("Error creating destination:", err);
+    res.status(500).json({ error: "Failed to create destination" });
+  }
 });
 
-app.put("/api/destinations/:id", (req, res) => {
-  const data = readData();
-  const id = Number(req.params.id);
-  const index = data.destinations.findIndex((d) => d.id === id);
-  if (index === -1) return res.status(404).json({ message: "Not found" });
-  data.destinations[index] = { ...data.destinations[index], ...req.body };
-  writeData(data);
-  res.json({ message: "Destination updated" });
+app.put("/api/destinations/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await destinationsCollection.updateOne(
+      { id: id },
+      { $set: req.body }
+    );
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Destination not found" });
+    }
+    
+    res.json({ message: "Destination updated" });
+  } catch (err) {
+    console.error("Error updating destination:", err);
+    res.status(500).json({ error: "Failed to update destination" });
+  }
 });
 
-app.delete("/api/destinations/:id", (req, res) => {
-  const data = readData();
-  data.destinations = data.destinations.filter(
-    (d) => d.id !== Number(req.params.id)
-  );
-  writeData(data);
-  res.json({ message: "Destination deleted" });
+app.delete("/api/destinations/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    await destinationsCollection.deleteOne({ id: id });
+    res.json({ message: "Destination deleted" });
+  } catch (err) {
+    console.error("Error deleting destination:", err);
+    res.status(500).json({ error: "Failed to delete destination" });
+  }
 });
 
 // =============== REVIEWS ==================
-app.get("/api/reviews", (req, res) => {
-  const data = readData();
-  res.json(data.reviews || []);
+app.get("/api/reviews", async (req, res) => {
+  try {
+    const reviews = await reviewsCollection.find({}).toArray();
+    res.json(reviews);
+  } catch (err) {
+    console.error("Error fetching reviews:", err);
+    res.status(500).json({ error: "Failed to fetch reviews" });
+  }
 });
 
-app.post("/api/reviews", (req, res) => {
-  const data = readData();
-  const newReview = { id: Date.now(), ...req.body };
-  data.reviews.push(newReview);
-  writeData(data);
-  res.json({ message: "Review added", newReview });
+app.post("/api/reviews", async (req, res) => {
+  try {
+    const newReview = {
+      id: Date.now(),
+      ...req.body
+    };
+    await reviewsCollection.insertOne(newReview);
+    res.json({ message: "Review added", review: newReview });
+  } catch (err) {
+    console.error("Error creating review:", err);
+    res.status(500).json({ error: "Failed to create review" });
+  }
 });
 
-app.put("/api/reviews/:id", (req, res) => {
-  const data = readData();
-  const id = Number(req.params.id);
-  const index = data.reviews.findIndex((r) => r.id === id);
-  if (index === -1) return res.status(404).json({ message: "Not found" });
-  data.reviews[index] = { ...data.reviews[index], ...req.body };
-  writeData(data);
-  res.json({ message: "Review updated" });
+app.put("/api/reviews/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const result = await reviewsCollection.updateOne(
+      { id: id },
+      { $set: req.body }
+    );
+    
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ message: "Review not found" });
+    }
+    
+    res.json({ message: "Review updated" });
+  } catch (err) {
+    console.error("Error updating review:", err);
+    res.status(500).json({ error: "Failed to update review" });
+  }
 });
 
-app.delete("/api/reviews/:id", (req, res) => {
-  const data = readData();
-  data.reviews = data.reviews.filter((r) => r.id !== Number(req.params.id));
-  writeData(data);
-  res.json({ message: "Review deleted" });
+app.delete("/api/reviews/:id", async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    await reviewsCollection.deleteOne({ id: id });
+    res.json({ message: "Review deleted" });
+  } catch (err) {
+    console.error("Error deleting review:", err);
+    res.status(500).json({ error: "Failed to delete review" });
+  }
 });
 
-// Start server
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`🚀 Server running at http://localhost:${PORT}`);
+// Start server after DB connection
+connectDB().then(() => {
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
 });
