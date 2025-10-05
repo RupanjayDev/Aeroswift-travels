@@ -23,6 +23,10 @@ nav {
   font-family: "El Messiri", sans-serif;
 }
 
+.custom-btn {
+  width: 100px;
+}
+
 .nav-color {
   background: #0c1b36;
   color: #fff;
@@ -49,14 +53,6 @@ nav {
   margin-top: 10px;
   animation: bounce 2s infinite;
   display: inline-block;
-}
-
-.custom-btn {
-  width: 200px;
-  height: 50px;
-  border-radius: 5px;
-  background-color: #d6b24c;
-  margin: 10px 0;
 }
 
 /* Bounce animation */
@@ -115,8 +111,6 @@ footer .nav-link:hover {
   .navbar-brand {
     font-size: 1.5rem;
   }
-
-  
 
   .icon-animate {
     width: 50px;

@@ -118,10 +118,10 @@ async function loadDestinationsList() {
           }
         </div>
         <div class="ms-3">
-          <button class="btn btn-sm btn-warning me-2" onclick="editDestination(${
+          <button class="custom-btn btn btn-warning me-2" onclick="editDestination(${
             dest.id
           })">Edit</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteDestination(${
+          <button class="custom-btn btn  btn-danger" onclick="deleteDestination(${
             dest.id
           })">Delete</button>
         </div>
@@ -269,10 +269,10 @@ async function loadReviewsList() {
           }
         </div>
         <div class="ms-3">
-          <button class="btn btn-sm btn-warning me-2" onclick="editReview(${
+          <button class="custom-btn btn btn-warning me-2" onclick="editReview(${
             review.id
           })">Edit</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteReview(${
+          <button class="custom-btn btn  btn-danger" onclick="deleteReview(${
             review.id
           })">Delete</button>
         </div>
