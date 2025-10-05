@@ -1,233 +1,135 @@
-// dashboard.js (with backend integration)
-const BASE_URL = "http://localhost:3000/api";
+// main.js
+import { closeBookingModal, loadBookingModal } from "./booking.js";
 
-// ============ BOOKINGS ============
-async function loadBookings() {
+// Make functions globally available
+window.loadBookingModal = loadBookingModal;
+window.closeBookingModal = closeBookingModal;
+
+// Use relative URL for API calls (works both locally and on Render)
+const BASE_URL = "/api";
+
+// ============ DESTINATIONS ============
+async function renderDestinations() {
   try {
-    const res = await fetch(`${BASE_URL}/bookings`);
-    const bookings = await res.json();
+    console.log("Fetching destinations..."); // Debug log
+    const res = await fetch(`${BASE_URL}/destinations`);
 
-    const container = document.getElementById("bookingsContainer");
-    container.innerHTML = "";
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
 
-    if (bookings.length === 0) {
-      container.innerHTML = "<p class='text-muted'>No bookings yet.</p>";
+    const destinations = await res.json();
+    console.log("Destinations loaded:", destinations); // Debug log
+
+    const container = document.getElementById("destinationsContainer");
+    if (!container) {
+      console.error("destinationsContainer not found");
       return;
     }
 
-    bookings.forEach((booking, index) => {
-      const div = document.createElement("div");
-      div.classList.add("col", "border", "p-2", "m-1", "rounded-4");
-      div.innerHTML = `
-        <strong>${index + 1}. ${booking.fullName}</strong><br>
-        Passport: ${booking.passportNumber}<br>
-        Nationality: ${booking.nationality}<br>
-        Contact: ${booking.contactNumber}<br>
-        From: ${booking.departureCity} → To: ${booking.destinationCity}<br>
-        Departure: ${booking.departureDate} | Return: ${
-        booking.returnDate || "-"
-      }<br>
-        Passengers: ${booking.passengers}<br>
-        Requests: ${booking.specialRequests || "-"}<br>
+    container.innerHTML = "";
+
+    if (destinations.length === 0) {
+      container.innerHTML =
+        "<p class='text-center text-muted'>No destinations available.</p>";
+      return;
+    }
+
+    destinations.forEach((dest) => {
+      const card = document.createElement("div");
+      card.className = "destination-card mb-4 text-center";
+      card.innerHTML = `
+        <img src="${dest.image}" class="card-img-top" alt="${dest.title}" style="height:200px; object-fit:cover;">
+        <div class="card-body">
+          <h5 class="card-title">${dest.title}</h5>
+          <p class="card-text">Price: ${dest.price}</p>
+          <button class="btn btn-primary" onclick="loadBookingModal()">Book Now</button>
+        </div>
       `;
-      container.appendChild(div);
+      container.appendChild(card);
     });
   } catch (err) {
-    console.error("Failed to load bookings", err);
-    document.getElementById("bookingsContainer").innerHTML =
-      "<p class='text-danger'>Failed to load bookings. Make sure the server is running.</p>";
+    console.error("Failed to load destinations:", err);
+    const container = document.getElementById("destinationsContainer");
+    if (container) {
+      container.innerHTML =
+        "<p class='text-center text-danger'>Failed to load destinations. Error: " +
+        err.message +
+        "</p>";
+    }
   }
 }
-
-// ============ DESTINATIONS ============
-async function loadDestinationsList() {
-  const res = await fetch(`${BASE_URL}/destinations`);
-  const destinations = await res.json();
-  const list = document.getElementById("destList");
-  list.innerHTML = "";
-
-  if (destinations.length === 0) {
-    list.innerHTML =
-      "<li class='list-group-item'>No destinations added yet.</li>";
-    return;
-  }
-
-  destinations.forEach((dest) => {
-    const li = document.createElement("li");
-    li.className =
-      "list-group-item d-flex justify-content-between align-items-center";
-    li.innerHTML = `
-      <div class="flex-grow-1">
-        <strong>${dest.title}</strong> - ${dest.price}<br>
-        
-        ${
-          dest.image
-            ? `<img src="${dest.image}" width="100" class="rounded mt-1"/>`
-            : ""
-        }
-        
-      </div>
-      <div class>
-        <button class="btn btn-xl btn-warning me-2" onclick="editDestination(${
-          dest.id
-        })">Edit</button>
-        <button class="btn btn-xl btn-danger" onclick="deleteDestination(${
-          dest.id
-        })">Delete</button>
-      </div>
-    `;
-    list.appendChild(li);
-  });
-}
-
-// Add new destination
-document
-  .getElementById("destinationForm")
-  ?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const title = document.getElementById("destTitle").value;
-    const price = document.getElementById("destPrice").value;
-    const image = document.getElementById("destImage").value;
-
-    await fetch(`${BASE_URL}/destinations`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, price, image }),
-    });
-
-    e.target.reset();
-    await loadDestinationsList();
-    alert("✅ Destination added successfully!");
-  });
-
-// Edit destination
-window.editDestination = async function (id) {
-  const newTitle = prompt("Enter new destination title:");
-  const newPrice = prompt("Enter new price:");
-  if (!newTitle || !newPrice) return;
-
-  await fetch(`${BASE_URL}/destinations/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title: newTitle, price: newPrice }),
-  });
-
-  await loadDestinationsList();
-  alert("✅ Destination updated!");
-};
-
-// Delete destination
-window.deleteDestination = async function (id) {
-  if (!confirm("Are you sure you want to delete this destination?")) return;
-  await fetch(`${BASE_URL}/destinations/${id}`, { method: "DELETE" });
-  await loadDestinationsList();
-  alert("🗑️ Destination deleted!");
-};
 
 // ============ REVIEWS ============
-async function loadReviewsList() {
-  const res = await fetch(`${BASE_URL}/reviews`);
-  const reviews = await res.json();
-  const list = document.getElementById("revList");
-  list.innerHTML = "";
+async function renderReviews() {
+  try {
+    console.log("Fetching reviews..."); // Debug log
+    const res = await fetch(`${BASE_URL}/reviews`);
 
-  if (reviews.length === 0) {
-    list.innerHTML = "<li class='list-group-item'>No reviews added yet.</li>";
-    return;
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const reviews = await res.json();
+    console.log("Reviews loaded:", reviews); // Debug log
+
+    const carousel = document.getElementById("reviewsCarousel");
+    if (!carousel) {
+      console.error("reviewsCarousel not found");
+      return;
+    }
+
+    // Keep the <h2>, remove only previous carousel items
+    const h2 = carousel.querySelector("h2");
+    carousel.innerHTML = "";
+    if (h2) carousel.appendChild(h2);
+
+    if (reviews.length === 0) {
+      const p = document.createElement("p");
+      p.className = "text-center text-muted";
+      p.textContent = "No reviews yet.";
+      carousel.appendChild(p);
+      return;
+    }
+
+    reviews.forEach((review, index) => {
+      const item = document.createElement("div");
+      item.className = `carousel-item${index === 0 ? " active" : ""}`;
+      item.innerHTML = `
+        <div class="d-flex flex-column align-items-center text-center">
+          ${
+            review.image
+              ? `<img src="${review.image}" class="rounded-circle mb-3" width="80" height="80" alt="${review.name}"/>`
+              : ""
+          }
+          <h5>${review.name}</h5>
+          <p class="mb-0">${review.text}</p>
+        </div>
+      `;
+      carousel.appendChild(item);
+    });
+  } catch (err) {
+    console.error("Failed to load reviews:", err);
+    const carousel = document.getElementById("reviewsCarousel");
+    if (carousel) {
+      const p = document.createElement("p");
+      p.className = "text-center text-danger";
+      p.textContent = "Failed to load reviews. Error: " + err.message;
+      carousel.appendChild(p);
+    }
   }
-
-  reviews.forEach((review) => {
-    const li = document.createElement("li");
-    li.className =
-      "list-group-item d-flex justify-content-between align-items-center";
-    li.innerHTML = `
-      <div class="flex-grow-1">
-        <strong>${review.name}</strong><br>
-        <p class="mb-0">${review.text}</p>
-        ${
-          review.image
-            ? `<img src="${review.image}" width="100" class="rounded mt-1"/>`
-            : ""
-        }
-      </div>
-      <div class="ms-3">
-        <button class="btn btn-xl btn-warning me-2" onclick="editReview(${
-          review.id
-        })">Edit</button>
-        <button class="btn btn-xl btn-danger" onclick="deleteReview(${
-          review.id
-        })">Delete</button>
-      </div>
-    `;
-    list.appendChild(li);
-  });
 }
 
-// Add review
-document.getElementById("reviewForm")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("revName").value;
-  const image = document.getElementById("revImage").value;
-  const text = document.getElementById("revText").value;
-
-  await fetch(`${BASE_URL}/reviews`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, image, text }),
-  });
-
-  e.target.reset();
-  await loadReviewsList();
-  alert("✅ Review added successfully!");
-});
-
-// Edit review
-window.editReview = async function (id) {
-  const name = prompt("Enter new reviewer name:");
-  const text = prompt("Enter new review text:");
-  if (!name || !text) return;
-
-  await fetch(`${BASE_URL}/reviews/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, text }),
-  });
-
-  await loadReviewsList();
-  alert("✅ Review updated!");
-};
-
-// Delete review
-window.deleteReview = async function (id) {
-  if (!confirm("Are you sure you want to delete this review?")) return;
-  await fetch(`${BASE_URL}/reviews/${id}`, { method: "DELETE" });
-  await loadReviewsList();
-  alert("🗑️ Review deleted!");
-};
-
-// ============ INIT + TABS ============
+// Initialize on page load
 document.addEventListener("DOMContentLoaded", () => {
-  loadBookings();
-  loadDestinationsList();
-  loadReviewsList();
+  console.log("Main page loading..."); // Debug log
 
-  const tabs = document.querySelectorAll("#dashboardTabs .nav-link");
-  const contents = document.querySelectorAll(".tab-content");
+  renderDestinations();
+  renderReviews();
 
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (tab.textContent.trim() === "Disabled") return;
-
-      tabs.forEach((t) => t.classList.remove("active"));
-      contents.forEach((c) => (c.style.display = "none"));
-
-      tab.classList.add("active");
-      const targetId = tab.getAttribute("data-target");
-      const targetContent = document.getElementById(targetId);
-      if (targetContent) targetContent.style.display = "block";
-    });
-  });
+  // Refresh every 30s to reflect live updates (optional - can be removed if not needed)
+  setInterval(() => {
+    renderDestinations();
+    renderReviews();
+  }, 30000);
 });
