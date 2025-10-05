@@ -54,7 +54,10 @@
 
     <!-- Top Section -->
     <div class="container section1 mt-5">
-      <div class="row justify-content-center g-4 text-center" style="padding: 20px">
+      <div
+        class="row justify-content-center g-4 text-center"
+        style="padding: 20px"
+      >
         <!-- Umra Services -->
         <div
           class="pcol-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
@@ -103,7 +106,9 @@
           </a>
 
           <div class="collapse" id="collapseExample2">
-            <div class="card card-body mt-3">Information about flight booking.</div>
+            <div class="card card-body mt-3">
+              Information about flight booking.
+            </div>
           </div>
         </div>
 
@@ -179,6 +184,7 @@
                   <div class="col-12 col-sm-6 col-md-4">
                     <input
                       type="text"
+                      class="form-control"
                       placeholder="Title"
                       id="destTitle"
                       required
@@ -187,14 +193,16 @@
                   <div class="col-12 col-sm-6 col-md-4">
                     <input
                       type="text"
+                      class="form-control"
                       placeholder="Price"
                       id="destPrice"
                       required
                     />
                   </div>
-                  <div class="col-12 col-sm-6 col-md-4">
+                  <div class="col-12 col-sm-12 col-md-4">
                     <input
-                      type="text"
+                      type="url"
+                      class="form-control"
                       placeholder="Image URL"
                       id="destImage"
                       required
@@ -211,18 +219,32 @@
             <div class="container my-4">
               <h4>Manage Reviews</h4>
               <form id="reviewForm" class="mb-3">
-                <input type="text" placeholder="Name" id="revName" required />
-                <input
-                  type="text"
-                  placeholder="Image URL"
-                  id="revImage"
-                  required
-                />
-                <textarea
-                  placeholder="Review Text"
-                  id="revText"
-                  required
-                ></textarea>
+                <div class="mb-2">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Reviewer Name"
+                    id="revName"
+                    required
+                  />
+                </div>
+                <div class="mb-2">
+                  <input
+                    type="url"
+                    class="form-control"
+                    placeholder="Image URL"
+                    id="revImage"
+                  />
+                </div>
+                <div class="mb-2">
+                  <textarea
+                    class="form-control"
+                    placeholder="Review Text"
+                    id="revText"
+                    rows="3"
+                    required
+                  ></textarea>
+                </div>
                 <button type="submit" class="btn btn-success mt-2 w-100">
                   Add Review
                 </button>
