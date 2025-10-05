@@ -1,5 +1,8 @@
 // booking.js
 
+// Use relative URL that works both locally and on Render
+const BASE_URL = "/api";
+
 export function loadBookingModal() {
   const modalContainer = document.getElementById("modalContainer");
 
@@ -142,16 +145,34 @@ export function loadBookingModal() {
         specialRequests: document.getElementById("specialRequests").value,
       };
 
-      const res = await fetch("http://localhost:3000/api/bookings", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(bookingData),
-      });
+      try {
+        // Use relative URL instead of hardcoded localhost
+        const res = await fetch(`${BASE_URL}/bookings`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(bookingData),
+        });
 
-      const data = await res.json();
-      alert(data.message);
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          throw new Error(
+            errorData.error || `HTTP error! status: ${res.status}`
+          );
+        }
 
-      closeBookingModal();
+        const data = await res.json();
+        alert("✅ " + data.message);
+        closeBookingModal();
+
+        // Optional: reload to show updated data
+        // window.location.reload();
+      } catch (error) {
+        console.error("Booking error:", error);
+        alert("❌ Error submitting booking: " + error.message);
+      }
     });
 }
 
