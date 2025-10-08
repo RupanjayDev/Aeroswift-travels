@@ -68,7 +68,7 @@ async function renderReviews() {
         <div class="d-flex flex-column align-items-center text-center">
           ${
             review.image
-              ? `<img src="${review.image}" class="object-fit-cover rounded-circle mb-3 " width="300" height="300" alt="${review.name}"/>`
+              ? `<img src="${review.image}" class="object-fit-cover rounded-circle mb-3 " width="150" height="150" alt="${review.name}"/>`
               : ""
           }
           <h5>${review.name}</h5>

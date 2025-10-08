@@ -41,6 +41,11 @@ export function loadBookingModal() {
                   </div>
 
                   <div class="mb-3">
+                    <label for="email" class="form-label">Email *</label>
+                    <input type="email" class="form-control" id="email" required />
+                  </div>
+
+                  <div class="mb-3">
                     <label for="passportNumber" class="form-label">Passport Number *</label>
                     <input type="text" class="form-control" id="passportNumber" required />
                   </div>
@@ -134,6 +139,7 @@ export function loadBookingModal() {
 
       const bookingData = {
         fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
         passportNumber: document.getElementById("passportNumber").value,
         nationality: document.getElementById("nationality").value,
         contactNumber: document.getElementById("contactNumber").value,
@@ -146,7 +152,7 @@ export function loadBookingModal() {
       };
 
       try {
-        // Use relative URL instead of hardcoded localhost
+        // ✅ 1. Save booking data to your backend (optional)
         const res = await fetch(`${BASE_URL}/bookings`, {
           method: "POST",
           headers: {
@@ -163,12 +169,41 @@ export function loadBookingModal() {
           );
         }
 
-        const data = await res.json();
-        alert("✅ " + data.message);
-        closeBookingModal();
+        // ✅ 2. Send the same booking details via Web3Forms email
+        const web3Payload = {
+          access_key: "a29416b3-ad45-42b5-9220-3fc708db3a19", // replace with your real key
+          subject: "New Flight Booking - Aeroswift",
+          name: bookingData.fullName,
+          message: `
+✈️ New Flight Booking Received
 
-        // Optional: reload to show updated data
-        // window.location.reload();
+👤 Full Name: ${bookingData.fullName}
+🛂 Passport Number: ${bookingData.passportNumber}
+🌍 Nationality: ${bookingData.nationality}
+📞 Contact: ${bookingData.contactNumber}
+📧 email: ${bookingData.email}
+
+📍 Departure City: ${bookingData.departureCity}
+🏙 Destination City: ${bookingData.destinationCity}
+📅 Departure Date: ${bookingData.departureDate}
+📅 Return Date: ${bookingData.returnDate || "N/A"}
+👥 Passengers: ${bookingData.passengers}
+
+📝 Special Requests: ${bookingData.specialRequests || "None"}
+        `,
+        };
+
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(web3Payload),
+        });
+
+        alert("✅ Booking submitted successfully.");
+        closeBookingModal();
       } catch (error) {
         console.error("Booking error:", error);
         alert("❌ Error submitting booking: " + error.message);
