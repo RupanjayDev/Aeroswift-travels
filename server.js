@@ -21,7 +21,8 @@ const activeSessions = new Map();
 
 // MongoDB setup
 const MONGODB_URI =
-  process.env.MONGODB_URI ||"NONE"
+  process.env.MONGODB_URI ||
+  "mongodb+srv://rupanjay77_db_user:xZb2rInWU9aEgidB@cluster0.eoymkqx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const DB_NAME = "flightBookingDB";
 
 let db, bookingsCollection, destinationsCollection, reviewsCollection;

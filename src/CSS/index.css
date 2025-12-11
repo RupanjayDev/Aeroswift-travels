@@ -1,5 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=El+Messiri:wght@400..700&display=swap");
 
+/* ---------------------------
+   Palette variables — tweak here
+   --------------------------- */
+:root {
+  --cream: #f6f0e6;
+
+  /* Light Blue Theme */
+  --bg-dark: #eaf3ff; /* Very light blue background */
+  --nav-blue: #85b8ff; /* Soft light-blue navigation */
+  --nav-accent: #5fa4ff; /* Slightly stronger blue for hover */
+
+  --primary-blue: #4c9cff; /* Main blue — lighter */
+  --primary-mid: #6ab2ff; /* Hover blue */
+  --accent-light: #1b6fe0; /* link + highlight */
+
+  --muted-navy: #1e4f7a; /* Medium-blue heading color */
+  --text-dark: #0a2540; /* Main text on light backgrounds */
+  --text-light: #f8fbff; /* Soft white for blue sections */
+
+  --card-bg: #ffffff;
+  --soft-shadow: rgba(20, 70, 150, 0.15);
+
+  --testimonials-bg: linear-gradient(180deg, #a3caff 0%, #7bb5ff 100%);
+  --info-gradient: linear-gradient(135deg, #8fc4ff, #6ba8ff);
+
+  --glass-white: rgba(255, 255, 255, 0.15);
+}
+
+/* ---------------------------
+   Base reset & typography
+   --------------------------- */
 * {
   margin: 0;
   padding: 0;
@@ -14,88 +45,95 @@ body {
 }
 
 body {
-  background-color: #000000;
-  color: #222;
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---------------------------
+   Utilities
+   --------------------------- */
 .center-item {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
 .justify-space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* ---------------------------
+   NAV
+   --------------------------- */
 .nav-color {
-  background: #0c1b36;
-  color: #fff;
+  background: var(--nav-blue);
+  color: var(--text-light);
   width: 100%;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.04);
 }
 
 .navbar-toggler {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.25rem rgba(214, 178, 76, 0.25);
+  box-shadow: 0 0 0 0.25rem rgba(30, 111, 169, 0.15);
 }
 
 .container-fluid a {
-  color: #d6b24c;
+  color: var(--accent-light);
   font-weight: bold;
 }
 
 nav ul li a {
-  color: #fff;
+  color: var(--text-light);
   text-decoration: none;
   padding: 6px 12px;
   border-radius: 5px;
 }
 
+nav ul li a:hover {
+  color: var(--accent-light);
+}
 nav ul li a.active {
-  background: #28a745;
+  background: var(--nav-accent);
   font-weight: bold;
+  color: var(--text-light);
 }
 
+.container-fluid a.navbar-brand {
+  color: var(--text-light) !important;
+}
+
+/* ---------------------------
+   HERO (keep cream)
+   --------------------------- */
 .hero {
-  background: #f6f0e6;
+  background: var(--cream);
   width: 100%;
   margin: 0;
   padding: 40px 15px;
   min-height: 500px;
-}
-
-.btn-color {
-  background-color: #1ab27b;
-  border: none;
-  transition: all 0.3s ease;
-}
-
-.btn-color:hover {
-  background-color: #158f63;
-  transform: translateY(-2px);
+  color: var(--text-dark);
 }
 
 .hero-text h1 {
   font-weight: bold;
   margin-bottom: 15px;
   line-height: 1.2;
+  color: var(--text-dark);
 }
 
 .hero-gradient-text {
-  background: -webkit-linear-gradient(
-    #0f172a,
-    /* navy */ #1abc9c /* teal/emerald */
-  );
+  background: -webkit-linear-gradient(#072333, var(--primary-blue));
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -108,13 +146,30 @@ nav ul li a.active {
 .hero img {
   max-width: 100%;
   height: auto;
-  border: 4px solid #d6b24c;
+  border: 4px solid var(--primary-mid);
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(4, 30, 50, 0.12);
 }
 
+/* Buttons */
+.btn-color {
+  background-color: var(--primary-blue);
+  color: var(--text-light);
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 18px var(--soft-shadow);
+}
+
+.btn-color:hover {
+  background-color: var(--primary-mid);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------
+   DESTINATIONS / CARDS
+   --------------------------- */
 .destination-section {
-  background: #d1bfa8;
+  background: #e9e4d9; /* slightly different cream tone to separate from hero */
   width: 100%;
   padding: 50px 15px;
 }
@@ -124,29 +179,30 @@ nav ul li a.active {
   margin-bottom: 40px;
   font-weight: bold;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--muted-navy);
 }
 
 .destinations {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 25px;
-  max-width: 1600px; /* Increase max width for large screens */
+  max-width: 1600px;
   margin: 0 auto;
 }
 
 .destination-card {
-  background: #fff;
+  background: var(--card-bg);
   padding: 20px;
-  border: 2px solid #d6b24c;
+  border: 2px solid var(--primary-blue);
   text-align: center;
   border-radius: 12px;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(4, 30, 50, 0.06);
 }
 
 .destination-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(4, 30, 50, 0.1);
 }
 
 .destination-card img {
@@ -160,16 +216,20 @@ nav ul li a.active {
 .destination-card p {
   font-size: 1.1rem;
   margin: 0;
+  color: var(--text-dark);
 }
 
 .destination-card strong {
-  color: #1ab27b;
+  color: var(--primary-blue);
   font-size: 1.3rem;
 }
 
+/* ---------------------------
+   TESTIMONIALS — "customer say"
+   --------------------------- */
 .testimonial-section {
-  background: #1d2535;
-  color: #fff;
+  background: var(--testimonials-bg);
+  color: var(--text-light);
   text-align: center;
   padding: 60px 15px;
   width: 100%;
@@ -178,6 +238,7 @@ nav ul li a.active {
 .testimonial-section h2 {
   margin-bottom: 40px;
   font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--accent-light);
 }
 
 .carousel-content {
@@ -188,16 +249,20 @@ nav ul li a.active {
 .carousel-content h3 {
   font-size: clamp(1.3rem, 3vw, 1.8rem);
   margin-bottom: 20px;
-  color: #d6b24c;
+  color: var(--accent-light);
 }
 
 .carousel-content p {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
 }
 
+/* ---------------------------
+   MARKETING / FEATURES
+   --------------------------- */
 .marketing {
-  background-color: #a4af94;
+  background-color: #dceaf6; /* pale blue-cream */
   width: 100%;
   padding: 60px 15px;
 }
@@ -205,39 +270,45 @@ nav ul li a.active {
 .marketing h2 {
   font-size: clamp(1.8rem, 4vw, 2.5rem);
   margin-bottom: 40px;
+  color: var(--muted-navy);
 }
 
 .featurette-divider {
   margin: 3rem 0;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(2, 32, 50, 0.08);
 }
 
 .featurette-heading {
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   margin-bottom: 20px;
+  color: var(--text-dark);
 }
 
 .lead {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.6;
+  color: var(--text-dark);
 }
 
+/* Placeholder look (keeps subtle blue tinge) */
 .placeholder-svg {
-  background: #f8f9fa;
-  border: 2px dashed #dee2e6;
+  background: #f1f6fb;
+  border: 2px dashed rgba(30, 111, 169, 0.15);
   border-radius: 8px;
 }
 
+/* ---------------------------
+   INFO SECTION (our features)
+   --------------------------- */
 .info-section {
-  background: linear-gradient(135deg, #396960, #173648);
-  color: #fff;
+  background: var(--info-gradient);
+  color: var(--text-light);
   width: 100%;
   padding: 60px 15px;
 }
 
 .info-cards {
   display: grid;
-
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 30px;
   max-width: 1200px;
@@ -245,77 +316,209 @@ nav ul li a.active {
 }
 
 .info-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--glass-white);
   padding: 25px;
   border-radius: 12px;
-  backdrop-filter: blur(10px);
-  border: 2px solid #d6b24c;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   transition: all 0.3s ease;
+  box-shadow: 0 6px 18px rgba(3, 25, 40, 0.12);
 }
 
 .info-card:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
   transform: translateY(-3px);
 }
 
 .info-card h5 {
-  color: #f8e08e;
+  color: var(--accent-light);
   margin-bottom: 15px;
   font-size: 1.2rem;
 }
 
+.info-card p {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* ---------------------------
+   Footer
+   --------------------------- */
 footer {
-  background: #0c1b36;
+  background: #459cec;
   padding: 40px 15px 20px;
+  color: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 footer .nav-link {
-  color: #d6b24c !important;
+  color: var(--accent-light) !important;
   transition: color 0.3s ease;
 }
 
 footer .nav-link:hover {
-  color: #fff !important;
+  color: var(--text-light) !important;
 }
 
-/* Mobile Specific Styles */
+/* ---------------------------
+   Links (global)
+   --------------------------- */
+a,
+.container-fluid a {
+  color: var(--accent-light);
+}
+a:hover {
+  color: var(--primary-mid);
+}
+
+/* Form controls / input focus */
+input,
+textarea,
+select {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-light);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Shadows, borders and small details */
+.card-border,
+.small-border {
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+/* ---------------------------
+   SECTION-BY-SECTION TEXT COLOR OVERRIDES
+   (place after variables to ensure they apply)
+   --------------------------- */
+
+/* 1. Global Base Text */
+body,
+p,
+li,
+span {
+  color: var(--text-dark);
+}
+
+/* 2. Navigation Bar (already uses --text-light, add small tweaks) */
+nav ul li a {
+  color: var(--text-light);
+}
+nav ul li a:hover {
+  color: var(--accent-light);
+}
+nav ul li a.active {
+  background: var(--nav-accent);
+  color: var(--text-light);
+}
+.container-fluid a.navbar-brand {
+  color: var(--text-light) !important;
+}
+
+/* 3. Hero Section (cream) */
+.hero,
+.hero p {
+  color: var(--text-dark);
+}
+.hero-text h1 {
+  color: var(--text-dark);
+}
+
+/* 4. Destination Section (cards) */
+.destination-section h2 {
+  color: var(--muted-navy);
+}
+.destination-card p {
+  color: var(--text-dark);
+}
+.destination-card strong {
+  color: var(--primary-blue);
+}
+
+/* 5. Testimonials Section (blue background) */
+.testimonial-section {
+  color: var(--text-light);
+}
+.testimonial-section h2 {
+  color: var(--accent-light);
+}
+.carousel-content h3 {
+  color: var(--accent-light);
+}
+.carousel-content p {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* 6. Marketing / Features Section */
+.marketing h2 {
+  color: var(--muted-navy);
+}
+.featurette-heading {
+  color: var(--text-dark);
+}
+.lead {
+  color: var(--text-dark);
+}
+
+/* 7. Info Cards (our features) */
+.info-section {
+  color: var(--text-light);
+}
+.info-card h5 {
+  color: var(--accent-light);
+}
+.info-card p {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* 8. Footer */
+footer {
+  color: var(--text-light);
+}
+footer .nav-link {
+  color: var(--accent-light) !important;
+}
+footer .nav-link:hover {
+  color: var(--text-light) !important;
+}
+
+/* ---------------------------
+   Responsive / Mobile tweaks
+   --------------------------- */
 @media (max-width: 768px) {
   .navbar-brand {
     font-size: 1.5rem !important;
   }
-
   .hero {
     padding: 30px 15px;
   }
-
   .hero .row {
     flex-direction: column-reverse;
   }
-
   .destinations {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
   .carousel-control-prev,
   .carousel-control-next {
     width: 40px;
   }
-
   .featurette {
     text-align: center;
   }
-
   .featurette .col-md-7,
   .featurette .col-md-5 {
     margin-bottom: 20px;
   }
-
   .info-cards {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-
   .btn-lg {
     padding: 12px 25px;
     font-size: 1rem;
@@ -327,7 +530,6 @@ footer .nav-link:hover {
     padding-left: 10px;
     padding-right: 10px;
   }
-
   .hero,
   .destination-section,
   .testimonial-section,
@@ -335,20 +537,16 @@ footer .nav-link:hover {
   .info-section {
     padding: 30px 10px;
   }
-
   .destinations {
     gap: 15px;
   }
-
   .carousel-item {
     padding: 20px 10px;
     min-height: 200px;
   }
-
   .info-card {
     padding: 20px;
   }
-
   .btn-lg {
     width: 100%;
     margin-top: 10px;
@@ -358,7 +556,7 @@ footer .nav-link:hover {
 /* Fix for Bootstrap responsive utilities */
 @media (max-width: 991.98px) {
   .navbar-collapse {
-    background: rgba(12, 27, 54, 0.95);
+    background: rgba(133, 184, 255, 0.96);
     margin-top: 10px;
     border-radius: 8px;
     padding: 15px;
