@@ -562,3 +562,54 @@ footer .nav-link:hover {
     padding: 15px;
   }
 }
+
+/* plane animation */
+
+/* Slide-in animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Wrapper to control positioning */
+.plane-wrapper {
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: flex-start;   /* vertical top */
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: 20px;          /* spacing from top */
+}
+
+/* Plane image styling */
+.plane-img {
+  width: 120px;              /* base size */
+  max-width: 30vw;           /* responsive scaling */
+  height: auto;
+  animation: slideIn 1.5s ease-out forwards;
+  transition: transform 0.4s ease;
+
+  box-shadow: none !important;
+  filter: none !important;
+  transform: rotate(90deg);  /* corrected rotation */
+}
+
+/* Hover effect */
+.plane-img:hover {
+  transform: scale(1.1) rotate(95deg);
+}
+
+/* Responsive tweaks */
+@media (min-width: 768px) {
+  .plane-img {
+    width: 150px;
+    max-width: 20vw;
+  }
+}

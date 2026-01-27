@@ -1,5 +1,5 @@
 <!-- index.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -22,11 +22,9 @@
     </style>
   </head>
   <body>
-    <nav class="nav-color navbar  navbar-expand-lg">
+    <nav class="nav-color navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a  class="navbar-brand fw-bold fs-1" href="#"
-          >AEROSWIFT
-        </a>
+        <a class="navbar-brand fw-bold fs-1" href="#">AEROSWIFT </a>
 
         <button
           class="navbar-toggler"
@@ -42,24 +40,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
             <li class="nav-item">
-              <a  class="fw-normal nav-link" href="/"
-                >Home</a
-              >
+              <a class="fw-normal nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a
-                
-                class="fw-normal nav-link"
-                href="/dashboard"
-                >Dashboard</a
-              >
+              <a class="fw-normal nav-link" href="/dashboard">Dashboard</a>
             </li>
 
             <li class="nav-item">
-              <a
-                
-                class="fw-normal nav-link"
-                href="/flight-details"
+              <a class="fw-normal nav-link" href="/flight-details"
                 >Flight Details</a
               >
             </li>
@@ -70,15 +58,26 @@
 
     <div class="hero">
       <div class="container-fluid">
+        <div class="plane-wrapper">
+          <img
+            src="./public/plane.png"
+            alt="plane"
+            class="plane-img border-0"
+          />
+        </div>
         <div class="row align-items-center g-4 py-3 text-center text-lg-start">
           <!-- Image: visible only on large screens -->
-          <div class="col-12 d-lg-block">
-            <img
-              src="./public/image.png"
-              alt="Sacred Journey"
-              loading="lazy"
-              class="d-block mx-auto img-fluid w-100 object-fit-cover h-lg-60vh rounded-4"
-            />
+          <div class="col-12  d-lg-block" >
+            <video
+              src="https://res.cloudinary.com/dngjmdx6r/video/upload/v1769492364/animation_tk9seo.mp4"
+              autoplay
+              muted
+              loop
+              playsinline
+              class="d-block mx-auto img-fluid w-100 object-fit-cover h-lg-100vh rounded-4"
+            >
+              Your browser does not support the video tag.
+            </video>
           </div>
 
           <!-- Text: visible on all screens -->
@@ -297,7 +296,9 @@
     </section>
 
     <footer class="py-4 text-light">
-      <p class="text-center card-title mb-0" >© 2025 Aeroswift. All rights reserved.</p>
+      <p class="text-center card-title mb-0">
+        © 2025 Aeroswift. All rights reserved.
+      </p>
     </footer>
 
     <script type="module" src="src/javascript/main.js"></script>

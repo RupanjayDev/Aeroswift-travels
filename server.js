@@ -12,14 +12,11 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Admin credentials - CHANGE THESE!
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
-// Store active login sessions
 const activeSessions = new Map();
 
-// MongoDB setup
 const MONGODB_URI =
   process.env.MONGODB_URI ||
   "mongodb+srv://rupanjay77_db_user:xZb2rInWU9aEgidB@cluster0.eoymkqx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -27,7 +24,6 @@ const DB_NAME = "flightBookingDB";
 
 let db, bookingsCollection, destinationsCollection, reviewsCollection;
 
-// Connect to database
 async function connectDB() {
   try {
     const client = new MongoClient(MONGODB_URI);
@@ -48,12 +44,10 @@ async function connectDB() {
   }
 }
 
-// Generate secure random token
 function generateToken() {
   return crypto.randomBytes(32).toString("hex");
 }
 
-// Check if user is logged in
 function requireAuth(req, res, next) {
   const authHeader = req.headers.authorization;
   const token = authHeader?.replace("Bearer ", "");
@@ -68,12 +62,10 @@ function requireAuth(req, res, next) {
     return res.status(401).json({ error: "Session expired" });
   }
 
-  // Extend session
   activeSessions.set(token, Date.now() + 24 * 60 * 60 * 1000);
   next();
 }
 
-// Clean expired sessions every hour
 setInterval(() => {
   const now = Date.now();
   for (const [token, expiry] of activeSessions.entries()) {
@@ -81,11 +73,9 @@ setInterval(() => {
   }
 }, 3600000);
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Serve static files
 app.use(express.static(__dirname));
 app.use("/css", express.static(path.join(__dirname, "src", "CSS")));
 app.use(
