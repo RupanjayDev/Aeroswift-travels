@@ -4,11 +4,11 @@
    Palette variables — tweak here
    --------------------------- */
 :root {
-  --cream: #f6f0e6;
+  --cream: #000;
 
   /* Light Blue Theme */
   --bg-dark: #eaf3ff; /* Very light blue background */
-  --nav-blue: #85b8ff; /* Soft light-blue navigation */
+  --nav-blue: #000; /* Soft light-blue navigation */
   --nav-accent: #5fa4ff; /* Slightly stronger blue for hover */
 
   --primary-blue: #4c9cff; /* Main blue — lighter */
@@ -17,12 +17,11 @@
 
   --muted-navy: #1e4f7a; /* Medium-blue heading color */
   --text-dark: #0a2540; /* Main text on light backgrounds */
-  --text-light: #f8fbff; /* Soft white for blue sections */
+  --text-light: blue; /* Soft white for blue sections */
 
   --card-bg: #ffffff;
   --soft-shadow: rgba(20, 70, 150, 0.15);
 
-  --testimonials-bg: linear-gradient(180deg, #a3caff 0%, #7bb5ff 100%);
   --info-gradient: linear-gradient(135deg, #8fc4ff, #6ba8ff);
 
   --glass-white: rgba(255, 255, 255, 0.15);
@@ -109,10 +108,6 @@ nav ul li a.active {
   color: var(--text-light);
 }
 
-.container-fluid a.navbar-brand {
-  color: var(--text-light) !important;
-}
-
 /* ---------------------------
    HERO (keep cream)
    --------------------------- */
@@ -133,11 +128,8 @@ nav ul li a.active {
 }
 
 .hero-gradient-text {
-  background: -webkit-linear-gradient(#072333, var(--primary-blue));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-style: italic;
+  color: blue;
+  /* font-style: italic; */
   font-weight: bold;
   display: block;
   margin: 15px 0;
@@ -169,7 +161,7 @@ nav ul li a.active {
    DESTINATIONS / CARDS
    --------------------------- */
 .destination-section {
-  background: #e9e4d9; /* slightly different cream tone to separate from hero */
+  background: #000; /* slightly different cream tone to separate from hero */
   width: 100%;
   padding: 50px 15px;
 }
@@ -229,7 +221,7 @@ nav ul li a.active {
    --------------------------- */
 .testimonial-section {
   background: var(--testimonials-bg);
-  color: var(--text-light);
+  color: black;
   text-align: center;
   padding: 60px 15px;
   width: 100%;
@@ -281,13 +273,13 @@ nav ul li a.active {
 .featurette-heading {
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   margin-bottom: 20px;
-  color: var(--text-dark);
+  color: brown;
 }
 
 .lead {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.6;
-  color: var(--text-dark);
+  color: #a3caff;
 }
 
 /* Placeholder look (keeps subtle blue tinge) */
@@ -301,8 +293,7 @@ nav ul li a.active {
    INFO SECTION (our features)
    --------------------------- */
 .info-section {
-  background: var(--info-gradient);
-  color: var(--text-light);
+  background-color: black;
   width: 100%;
   padding: 60px 15px;
 }
@@ -417,7 +408,7 @@ nav ul li a.active {
   color: var(--text-light);
 }
 .container-fluid a.navbar-brand {
-  color: var(--text-light) !important;
+  color: "seagreen" !important;
 }
 
 /* 3. Hero Section (cream) */
@@ -442,7 +433,7 @@ nav ul li a.active {
 
 /* 5. Testimonials Section (blue background) */
 .testimonial-section {
-  color: var(--text-light);
+  color: black;
 }
 .testimonial-section h2 {
   color: var(--accent-light);
@@ -458,16 +449,10 @@ nav ul li a.active {
 .marketing h2 {
   color: var(--muted-navy);
 }
-.featurette-heading {
-  color: var(--text-dark);
-}
-.lead {
-  color: var(--text-dark);
-}
 
 /* 7. Info Cards (our features) */
 .info-section {
-  color: var(--text-light);
+  color: black;
 }
 .info-card h5 {
   color: var(--accent-light);
@@ -478,7 +463,7 @@ nav ul li a.active {
 
 /* 8. Footer */
 footer {
-  color: var(--text-light);
+  color: seagreen;
 }
 footer .nav-link {
   color: var(--accent-light) !important;
@@ -580,25 +565,25 @@ footer .nav-link:hover {
 /* Wrapper to control positioning */
 .plane-wrapper {
   display: flex;
-  justify-content: center;   /* horizontal center */
-  align-items: flex-start;   /* vertical top */
+  justify-content: center; /* horizontal center */
+  align-items: flex-start; /* vertical top */
   position: relative;
   width: 100%;
   height: auto;
-  margin-top: 20px;          /* spacing from top */
+  margin-top: 20px; /* spacing from top */
 }
 
 /* Plane image styling */
 .plane-img {
-  width: 120px;              /* base size */
-  max-width: 30vw;           /* responsive scaling */
+  width: 120px; /* base size */
+  max-width: 30vw; /* responsive scaling */
   height: auto;
   animation: slideIn 1.5s ease-out forwards;
   transition: transform 0.4s ease;
 
   box-shadow: none !important;
   filter: none !important;
-  transform: rotate(90deg);  /* corrected rotation */
+  transform: rotate(90deg); /* corrected rotation */
 }
 
 /* Hover effect */
@@ -611,5 +596,68 @@ footer .nav-link:hover {
   .plane-img {
     width: 150px;
     max-width: 20vw;
+  }
+}
+
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+.close-btn {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.gallery img,
+.gallery video {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Clickable cards */
+.destination-card {
+  cursor: pointer;
+}
+
+/* Smooth modal animation */
+.modal-content {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

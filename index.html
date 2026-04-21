@@ -66,28 +66,18 @@
           />
         </div>
         <div class="row align-items-center g-4 py-3 text-center text-lg-start">
-          <!-- Image: visible only on large screens -->
-          <div class="col-12  d-lg-block" >
-            <video
-              src="https://res.cloudinary.com/dngjmdx6r/video/upload/v1769492364/animation_tk9seo.mp4"
-              autoplay
-              muted
-              loop
-              playsinline
-              class="d-block mx-auto img-fluid w-100 object-fit-cover h-lg-100vh rounded-4"
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-
-          <!-- Text: visible on all screens -->
           <div class="col-12">
             <h3
               class="display-2 fw-bold lh-1 mb-3 hero-gradient-text text-center"
             >
-              AEROSWIFT TOURS & TRAVELS
+              AEROSWIFT <span style="color: brown">TOURS</span>
+              <span style="color: blueviolet">&</span>
+              <span style="color: orange">TRAVELS</span>
             </h3>
-            <h3 class="display-6 fw-bold lh-1 mb-3 text-center">
+            <h3
+              class="display-6 fw-bold lh-1 mb-3 text-center"
+              style="color: seagreen"
+            >
               YOUR SACRED JOURNEY AWAITS...<br />
               <img
                 src="./public/logo.jpg"
@@ -102,25 +92,29 @@
                 "
                 alt="logo"
               /><br />
-              Hajj & Umra Services
+              Tours & Travel Services
             </h3>
-            <p class="lead text-center">
-              Embark on your spiritual journey with our comprehensive Hajj and
-              Umrah services. We provide seamless travel arrangements,
-              comfortable accommodations, and guided tours to make your
-              pilgrimage memorable and meaningful.
+            <p class="lead text-center" style="color: white">
+              We provide seamless Umrah services with travel arrangements,
+              comfortable accommodations, and guided tours to make your journey
+              truly memorable and meaningful.
             </p>
-            <div class="d-flex justify-content-center mt-3">
-              <button
-                type="button"
-                class="text-light btn btn-color btn-lg px-4"
-                onclick="loadBookingModal()"
-              >
-                FIND A FLIGHT
-              </button>
-              <div id="modalContainer"></div>
-            </div>
           </div>
+          <!-- Image: visible only on large screens -->
+          <div class="col-12 d-lg-block">
+            <video
+              src="https://www.pexels.com/download/video/18627974/"
+              autoplay
+              muted
+              loop
+              playsinline
+              class="d-block mx-auto img-fluid w-70 object-fit-cover h-lg-70vh rounded-4"
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <!-- Text: visible on all screens -->
         </div>
       </div>
     </div>
@@ -128,9 +122,41 @@
     <!-- Popular Destinations -->
     <section class="destination-section">
       <div class="container-fluid">
-        <h2 class="text-center mb-4">POPULAR DESTINATIONS</h2>
+        <h2
+          class="text-center mb-4"
+          style="color: blueviolet; font-size: 100px"
+        >
+          SERVICES WE OFFER!!
+        </h2>
         <div class="destinations" id="destinationsContainer">
           <!-- Destinations will be injected by JS -->
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+          <button
+            type="button"
+            class="text-light btn btn-color btn-lg px-4"
+            onclick="loadBookingModal()"
+          >
+            FIND A FLIGHT
+          </button>
+          <div id="modalContainer"></div>
+        </div>
+      </div>
+
+      <div id="destinationModal" class="custom-modal">
+        <div class="modal-content">
+          <span class="close-btn">&times;</span>
+
+          <div id="modalMedia"></div>
+
+          <h2 id="modalTitle"></h2>
+          <p id="modalPrice"></p>
+          <p id="modalDescription"></p>
+
+          <h4>Features</h4>
+          <ul id="modalFeatures"></ul>
+
+          <div id="modalGallery" class="gallery"></div>
         </div>
       </div>
     </section>
@@ -140,8 +166,13 @@
       id="carouselExampleIndicators"
       class="testimonial-section carousel slide"
       data-bs-ride="carousel"
+      style="background-color: black"
     >
-      <div class="carousel-inner" id="reviewsCarousel">
+      <div
+        class="carousel-inner"
+        id="reviewsCarousel"
+        style="background-color: black"
+      >
         <h2 class="d-flex justify-content-center mb-4">
           WHAT OUR CUSTOMERS SAY
         </h2>
@@ -168,18 +199,18 @@
       </button>
     </div>
 
-    <div class="marketing">
+    <div class="marketing" style="background-color: black">
       <div class="container">
         <div class="text-center mb-5">
-          <h2>OUR FEATURES</h2>
+          <h2 style="color: seagreen">OUR FEATURES</h2>
         </div>
 
         <hr class="my-5" />
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">
+            <h2 class="featurette-heading fw-normal lh-1" style="color: brown">
               Sacred Sites Access.
-              <span class="text-body-secondary">Spiritually enriching.</span>
+              <span style="color: cadetblue">Spiritually enriching.</span>
             </h2>
             <p class="lead">
               Gain exclusive access to the most sacred sites with our specially
@@ -203,9 +234,9 @@
 
         <div class="row featurette">
           <div class="col-md-7 order-md-2">
-            <h2 class="featurette-heading fw-normal lh-1">
+            <h2 class="featurette-heading fw-normal lh-1" style="color: brown">
               24/7 Support Service.
-              <span class="text-body-secondary">Always there for you.</span>
+              <span style="color: cadetblue">Always there for you.</span>
             </h2>
             <p class="lead">
               Our dedicated support team is available round the clock to assist
@@ -229,9 +260,9 @@
 
         <div class="row featurette">
           <div class="col-md-7">
-            <h2 class="featurette-heading fw-normal lh-1">
+            <h2 class="featurette-heading fw-normal lh-1" style="color: brown">
               Customized Itineraries.
-              <span class="text-body-secondary">Tailored for you.</span>
+              <span style="color: cadetblue">Tailored for you.</span>
             </h2>
             <p class="lead">
               Every pilgrimage is unique. We create personalized itineraries

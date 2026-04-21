@@ -5,7 +5,7 @@ import { closeBookingModal, loadBookingModal } from "./booking.js";
 window.loadBookingModal = loadBookingModal;
 window.closeBookingModal = closeBookingModal;
 
-// Use relative URL for API calls (works both locally and on Render)
+// Use relative URL for API calls
 const BASE_URL = "/api";
 
 // ============ DESTINATIONS ============
@@ -26,19 +26,122 @@ async function renderDestinations() {
     destinations.forEach((dest) => {
       const card = document.createElement("div");
       card.className = "destination-card mb-4 text-center";
+
+      const isVideo = dest.image.match(/\.(mp4|webm|ogg)$/i);
+
+      let mediaElement = "";
+
+      if (isVideo) {
+        mediaElement = `
+          <video 
+            class="card-img-top" 
+            style="height:200px; object-fit:cover;" 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+          >
+            <source src="${dest.image}" type="video/mp4">
+          </video>
+        `;
+      } else {
+        mediaElement = `
+          <img 
+            src="${dest.image}" 
+            class="card-img-top" 
+            alt="${dest.title}" 
+            style="height:200px; object-fit:cover;"
+          >
+        `;
+      }
+
       card.innerHTML = `
-        <img src="${dest.image}" class="card-img-top" alt="${dest.title}" style="height:200px; object-fit:cover;">
+        ${mediaElement}
         <div class="card-body">
           <h5 class="card-title">${dest.title}</h5>
           <p class="card-text">Price: ${dest.price}</p>
         </div>
       `;
+
+      // ✅ OPEN MODAL ON CLICK
+      card.addEventListener("click", () => openModal(dest));
+
       container.appendChild(card);
     });
   } catch (err) {
     console.error("Failed to load destinations:", err);
   }
 }
+
+// ✅ MODAL FUNCTION
+function openModal(dest) {
+  const modal = document.getElementById("destinationModal");
+
+  const isVideo = dest.image.match(/\.(mp4|webm|ogg)$/i);
+  const mediaContainer = document.getElementById("modalMedia");
+
+  mediaContainer.innerHTML = isVideo
+    ? `
+      <video controls autoplay muted style="width:100%; border-radius:10px;">
+        <source src="${dest.image}">
+      </video>
+    `
+    : `
+      <img src="${dest.image}" style="width:100%; border-radius:10px;" />
+    `;
+
+  document.getElementById("modalTitle").innerText = dest.title;
+  document.getElementById("modalPrice").innerText = "Price: " + dest.price;
+  document.getElementById("modalDescription").innerText =
+    dest.description || "No description available.";
+
+  // Features
+  const featuresList = document.getElementById("modalFeatures");
+  featuresList.innerHTML = "";
+
+  (dest.features || []).forEach((f) => {
+    const li = document.createElement("li");
+    li.innerText = f;
+    featuresList.appendChild(li);
+  });
+
+  // Gallery
+  const gallery = document.getElementById("modalGallery");
+  gallery.innerHTML = "";
+
+  (dest.gallery || []).forEach((item) => {
+    const isVid = item.match(/\.(mp4|webm|ogg)$/i);
+
+    const el = isVid
+      ? document.createElement("video")
+      : document.createElement("img");
+
+    el.src = item;
+
+    if (isVid) {
+      el.autoplay = true;
+      el.muted = true;
+      el.loop = true;
+    }
+
+    gallery.appendChild(el);
+  });
+
+  modal.style.display = "block";
+}
+
+// ✅ CLOSE MODAL
+document.addEventListener("click", (e) => {
+  const modal = document.getElementById("destinationModal");
+
+  if (e.target.classList.contains("close-btn")) {
+    modal.style.display = "none";
+  }
+
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
 
 // ============ REVIEWS ============
 async function renderReviews() {
@@ -48,7 +151,6 @@ async function renderReviews() {
 
     const carousel = document.getElementById("reviewsCarousel");
 
-    // Keep the <h2>, remove only previous carousel items
     const h2 = carousel.querySelector("h2");
     carousel.innerHTML = "";
     if (h2) carousel.appendChild(h2);
@@ -65,14 +167,14 @@ async function renderReviews() {
       const item = document.createElement("div");
       item.className = `carousel-item${index === 0 ? " active" : ""}`;
       item.innerHTML = `
-        <div class="d-flex flex-column align-items-center text-center">
+        <div class="d-flex flex-column align-items-center text-center" >
           ${
             review.image
               ? `<img src="${review.image}" class="object-fit-cover rounded-circle mb-3 " width="150" height="150" alt="${review.name}"/>`
               : ""
           }
-          <h5>${review.name}</h5>
-          <p class="mb-0">${review.text}</p>
+          <h5 style="color: white">${review.name}</h5>
+          <p style="color: white" class="mb-0">${review.text}</p>
         </div>
       `;
       carousel.appendChild(item);
@@ -82,12 +184,11 @@ async function renderReviews() {
   }
 }
 
-// Initialize on page load
+// Init
 document.addEventListener("DOMContentLoaded", () => {
   renderDestinations();
   renderReviews();
 
-  // Optional: Refresh every 30s to reflect live updates
   setInterval(() => {
     renderDestinations();
     renderReviews();
