@@ -22,7 +22,11 @@ const MONGODB_URI =
   "mongodb+srv://rupanjay77_db_user:xZb2rInWU9aEgidB@cluster0.eoymkqx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const DB_NAME = "flightBookingDB";
 
-let db, bookingsCollection, destinationsCollection, reviewsCollection;
+let db,
+  bookingsCollection,
+  destinationsCollection,
+  reviewsCollection,
+  settingsCollection;
 
 async function connectDB() {
   try {
@@ -34,6 +38,7 @@ async function connectDB() {
     bookingsCollection = db.collection("bookings");
     destinationsCollection = db.collection("destinations");
     reviewsCollection = db.collection("reviews");
+    settingsCollection = db.collection("settings");
 
     await bookingsCollection.createIndex({ createdAt: -1 });
     await destinationsCollection.createIndex({ id: 1 });
@@ -80,7 +85,7 @@ app.use(express.static(__dirname));
 app.use("/css", express.static(path.join(__dirname, "src", "CSS")));
 app.use(
   "/javascript",
-  express.static(path.join(__dirname, "src", "javascript"))
+  express.static(path.join(__dirname, "src", "javascript")),
 );
 app.use("/dashboard", express.static(path.join(__dirname, "src", "dashboard")));
 app.use("/pages", express.static(path.join(__dirname, "src", "pages")));
@@ -89,18 +94,24 @@ app.use("/public", express.static(path.join(__dirname, "public")));
 // HTML Routes
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 app.get("/login", (req, res) =>
-  res.sendFile(path.join(__dirname, "login.html"))
+  res.sendFile(path.join(__dirname, "login.html")),
 );
 app.get("/dashboard", (req, res) =>
-  res.sendFile(path.join(__dirname, "src", "dashboard", "dashboard.html"))
+  res.sendFile(path.join(__dirname, "src", "dashboard", "dashboard.html")),
 );
 app.get("/booking", (req, res) =>
-  res.sendFile(path.join(__dirname, "src", "pages", "booking", "booking.html"))
+  res.sendFile(path.join(__dirname, "src", "pages", "booking", "booking.html")),
 );
 app.get("/flight-details", (req, res) =>
   res.sendFile(
-    path.join(__dirname, "src", "pages", "flightDetails", "flight-details.html")
-  )
+    path.join(
+      __dirname,
+      "src",
+      "pages",
+      "flightDetails",
+      "flight-details.html",
+    ),
+  ),
 );
 
 // Health check
@@ -196,7 +207,7 @@ app.put("/api/destinations/:id", requireAuth, async (req, res) => {
   try {
     const result = await destinationsCollection.updateOne(
       { id: Number(req.params.id) },
-      { $set: req.body }
+      { $set: req.body },
     );
     if (result.matchedCount === 0)
       return res.status(404).json({ message: "Not found" });
@@ -240,7 +251,7 @@ app.put("/api/reviews/:id", requireAuth, async (req, res) => {
   try {
     const result = await reviewsCollection.updateOne(
       { id: Number(req.params.id) },
-      { $set: req.body }
+      { $set: req.body },
     );
     if (result.matchedCount === 0)
       return res.status(404).json({ message: "Not found" });
@@ -256,6 +267,29 @@ app.delete("/api/reviews/:id", requireAuth, async (req, res) => {
     res.json({ message: "Deleted" });
   } catch (err) {
     res.status(500).json({ error: "Failed to delete" });
+  }
+});
+
+// ========== SETTINGS (HERO VIDEO) ==========
+app.get("/api/settings", async (req, res) => {
+  try {
+    const settings = await settingsCollection.findOne({ type: "global" });
+    res.json(settings || {});
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch settings" });
+  }
+});
+
+app.post("/api/settings", requireAuth, async (req, res) => {
+  try {
+    await settingsCollection.updateOne(
+      { type: "global" },
+      { $set: { ...req.body, type: "global" } },
+      { upsert: true },
+    );
+    res.json({ message: "Settings updated" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to update settings" });
   }
 });
 

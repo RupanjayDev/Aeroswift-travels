@@ -1,5 +1,5 @@
 <!-- dashboard.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <script>
@@ -45,7 +45,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
             <li class="nav-item">
-              <a style="color: #d6b24c; cursor: pointer;" class="nav-link" onclick="logout()" 
+              <a
+                style="color: #d6b24c; cursor: pointer"
+                class="nav-link"
+                onclick="logout()"
                 >Logout</a
               >
             </li>
@@ -209,6 +212,59 @@
           </div>
 
           <div id="tabQuickActions" class="tab-content" style="display: none">
+            <!-- HERO VIDEO CONTROL -->
+            <div class="mb-4">
+              <h3>Hero Video</h3>
+              <input
+                id="heroVideoInput"
+                class="form-control mb-2"
+                placeholder="Video URL"
+              />
+              <button class="btn btn-primary" onclick="updateHeroVideo()">
+                Update
+              </button>
+            </div>
+
+            <!-- DESTINATION FORM -->
+            <form id="destinationForm">
+              <h3>Add Destination</h3>
+
+              <input
+                id="destTitle"
+                class="form-control mb-2"
+                placeholder="Title"
+              />
+              <input
+                id="destPrice"
+                class="form-control mb-2"
+                placeholder="Price"
+              />
+              <input
+                id="destImage"
+                class="form-control mb-2"
+                placeholder="Image/Video URL"
+              />
+
+              <textarea
+                id="destDescription"
+                class="form-control mb-2"
+                placeholder="Description"
+              ></textarea>
+
+              <input
+                id="destFeatures"
+                class="form-control mb-2"
+                placeholder="Features comma separated"
+              />
+              <input
+                id="destGallery"
+                class="form-control mb-2"
+                placeholder="Gallery URLs comma separated"
+              />
+
+              <button type="submit" class="btn btn-success">Add</button>
+            </form>
+
             <div class="container my-3">
               <h4>Manage Destinations</h4>
               <form id="destinationForm" class="mb-3">

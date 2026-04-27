@@ -661,3 +661,16 @@ footer .nav-link:hover {
     transform: scale(1);
   }
 }
+
+video {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  video,
+  .card-img-top {
+    height: 180px !important;
+  }
+}

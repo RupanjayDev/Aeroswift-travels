@@ -95,7 +95,7 @@ async function loadBookings() {
               booking.passengers
             }</small></p>
             <p class="card-text"><small class="text-muted">${new Date(
-              booking.createdAt
+              booking.createdAt,
             ).toLocaleString()}</small></p>
           </div>
         </div>
@@ -154,22 +154,28 @@ const destForm = document.getElementById("destinationForm");
 if (destForm) {
   destForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+
     const title = document.getElementById("destTitle").value;
     const price = document.getElementById("destPrice").value;
     const image = document.getElementById("destImage").value;
+    const description = document.getElementById("destDescription").value;
+    const features = document.getElementById("destFeatures").value.split(",");
+    const gallery = document.getElementById("destGallery").value.split(",");
 
-    try {
-      await authFetch(`${BASE_URL}/destinations`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, price, image }),
-      });
-      e.target.reset();
-      await loadDestinationsList();
-      alert("✅ Destination added!");
-    } catch (err) {
-      alert("❌ Failed to add destination");
-    }
+    await authFetch(`${BASE_URL}/destinations`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        price,
+        image,
+        description,
+        features,
+        gallery,
+      }),
+    });
+
+    alert("✅ Added");
   });
 }
 
@@ -205,6 +211,20 @@ window.deleteDestination = async function (id) {
   } catch (err) {
     alert("❌ Failed to delete");
   }
+};
+
+// HERO VIDEO FUNCTIOM
+
+window.updateHeroVideo = async function () {
+  const heroVideo = document.getElementById("heroVideoInput").value;
+
+  await authFetch(`${BASE_URL}/settings`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ heroVideo }),
+  });
+
+  alert("✅ Hero video updated");
 };
 
 // ========== REVIEWS ==========
