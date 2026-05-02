@@ -673,4 +673,13 @@ video {
   .card-img-top {
     height: 180px !important;
   }
+  .destination-section > div > h2 {
+    font-size: 20px;
+  }
+}
+
+.review-img {
+  width: 120px; /* fixed size */
+  height: 120px; /* same as width for perfect circle */
+  object-fit: cover; /* ensures image fills circle without distortion */
 }

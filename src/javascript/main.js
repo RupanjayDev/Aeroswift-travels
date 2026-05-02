@@ -129,12 +129,16 @@ async function renderReviews() {
     const item = document.createElement("div");
     item.className = `carousel-item ${i === 0 ? "active" : ""}`;
     item.innerHTML = `
-      <div class="text-center">
-        ${r.image ? `<img src="${r.image}" width="120" class="rounded-circle mb-3"/>` : ""}
-        <h5 style="color:white">${r.name}</h5>
-        <p style="color:white">${r.text}</p>
-      </div>
-    `;
+    <div class="text-center">
+      ${
+        r.image
+          ? `<img src="${r.image}" class="rounded-circle mb-3 review-img"/>`
+          : ""
+      }
+      <h5 style="color:white">${r.name}</h5>
+      <p style="color:white">${r.text}</p>
+    </div>
+  `;
     carousel.appendChild(item);
   });
 }

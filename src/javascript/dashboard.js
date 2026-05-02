@@ -416,16 +416,16 @@ async function loadReviewsList() {
       li.className =
         "list-group-item d-flex justify-content-between align-items-center";
       li.innerHTML = `
-        <div class="flex-grow-1">
-          <strong>${review.name}</strong><br>
-          <p class="mb-1">${review.text}</p>
-          ${review.image ? `<img src="${review.image}" width="80" class="rounded mt-2"/>` : ""}
-        </div>
-        <div>
-          <button class="btn btn-sm btn-warning me-2" onclick="editReview(${review.id})">Edit</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteReview(${review.id})">Delete</button>
-        </div>
-      `;
+    <div class="flex-grow-1">
+      <strong>${review.name}</strong><br>
+      <p class="mb-1">${review.text}</p>
+      ${review.image ? `<img src="${review.image}" width="180" class="rounded-circle mt-2"/>` : ""}
+    </div>
+    <div>
+      <button class="btn btn-sm btn-warning me-2" onclick="editReview(${review.id})">Edit</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteReview(${review.id})">Delete</button>
+    </div>
+  `;
       list.appendChild(li);
     });
   } catch (err) {
