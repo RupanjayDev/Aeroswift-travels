@@ -21,6 +21,214 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./dashboard.css" />
+
+    <style>
+      /* ========== DESTINATION EDIT MODAL ========== */
+      #destEditModal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        z-index: 10000;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        animation: fadeInOv 0.2s ease;
+      }
+      @keyframes fadeInOv {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      #destEditBox {
+        background: #fff;
+        border-radius: 14px;
+        width: 100%;
+        max-width: 620px;
+        max-height: 92vh;
+        overflow-y: auto;
+        animation: slideUpBox 0.3s ease;
+        font-family: "El Messiri", sans-serif;
+      }
+      @keyframes slideUpBox {
+        from {
+          transform: translateY(30px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      #destEditBox::-webkit-scrollbar {
+        width: 4px;
+      }
+      #destEditBox::-webkit-scrollbar-thumb {
+        background: #396960;
+        border-radius: 4px;
+      }
+
+      .edit-header {
+        background: linear-gradient(135deg, #396960, #173648);
+        padding: 18px 22px;
+        border-radius: 14px 14px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .edit-header h4 {
+        color: #d6b24c;
+        margin: 0;
+        font-size: 1.1rem;
+      }
+      .edit-close-btn {
+        background: none;
+        border: none;
+        color: #d6b24c;
+        font-size: 1.6rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .edit-body {
+        padding: 22px;
+      }
+
+      .edit-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #173648;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .edit-input,
+      .edit-textarea {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1.5px solid #dde;
+        border-radius: 7px;
+        font-size: 0.9rem;
+        font-family: "El Messiri", sans-serif;
+        outline: none;
+        transition: border 0.2s;
+        background: #fafafa;
+        color: #333;
+      }
+      .edit-input:focus,
+      .edit-textarea:focus {
+        border-color: #396960;
+        box-shadow: 0 0 0 3px rgba(57, 105, 96, 0.1);
+        background: #fff;
+      }
+
+      .edit-section-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #396960;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 18px 0 10px;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      .gallery-add-row {
+        display: flex;
+        gap: 8px;
+        align-items: stretch;
+      }
+      .gallery-add-row input {
+        flex: 1;
+      }
+      .gallery-add-btn {
+        padding: 9px 14px;
+        background: linear-gradient(135deg, #396960, #173648);
+        color: #d6b24c;
+        border: none;
+        border-radius: 7px;
+        font-size: 0.85rem;
+        cursor: pointer;
+        font-weight: 600;
+        white-space: nowrap;
+        font-family: "El Messiri", sans-serif;
+        transition: transform 0.15s;
+      }
+      .gallery-add-btn:hover {
+        transform: translateY(-1px);
+      }
+
+      #editGalleryContainer {
+        min-height: 40px;
+        padding: 8px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        border: 1.5px dashed #ccd;
+        margin-bottom: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #editGalleryContainer:empty::before {
+        content: "No gallery images yet";
+        color: #aaa;
+        font-size: 0.82rem;
+        align-self: center;
+      }
+
+      #editMainImagePreview {
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 8px;
+        background: #f0f0f0;
+        min-height: 10px;
+      }
+
+      .edit-save-btn {
+        width: 100%;
+        padding: 12px;
+        background: linear-gradient(135deg, #396960, #173648);
+        color: #d6b24c;
+        border: none;
+        border-radius: 9px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: "El Messiri", sans-serif;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        margin-top: 10px;
+      }
+      .edit-save-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(23, 54, 72, 0.25);
+      }
+
+      .edit-cancel-btn {
+        width: 100%;
+        padding: 10px;
+        background: #f0f0f0;
+        color: #555;
+        border: none;
+        border-radius: 9px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        font-family: "El Messiri", sans-serif;
+        margin-top: 6px;
+        transition: background 0.2s;
+      }
+      .edit-cancel-btn:hover {
+        background: #e0e0e0;
+      }
+    </style>
   </head>
 
   <body>
@@ -41,7 +249,6 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fs-5">
             <li class="nav-item">
@@ -71,7 +278,6 @@
     <!-- Top Section -->
     <div class="container mt-5">
       <div class="row justify-content-center g-4 text-center">
-        <!-- Umra Services -->
         <div
           class="pcol-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
         >
@@ -100,13 +306,11 @@
               "
             />
           </a>
-
           <div class="collapse" id="collapseExample">
             <div class="card card-body mt-3">Details about Umra services.</div>
           </div>
         </div>
 
-        <!-- Flight Tickets -->
         <div
           class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
         >
@@ -135,7 +339,6 @@
               "
             />
           </a>
-
           <div class="collapse" id="collapseExample2">
             <div class="card card-body mt-3">
               Information about flight booking.
@@ -143,7 +346,6 @@
           </div>
         </div>
 
-        <!-- Visa Attestation -->
         <div
           class="col-12 col-sm-6 col-md-4 col-lg-4 d-flex flex-wrap justify-content-center"
         >
@@ -172,7 +374,6 @@
               "
             />
           </a>
-
           <div class="collapse" id="collapseExample3">
             <div class="card card-body mt-3">
               Visa and attestation service details.
@@ -201,6 +402,7 @@
         </div>
 
         <div class="card-body" style="max-height: 500px; overflow-y: auto">
+          <!-- BOOKINGS TAB -->
           <div id="tabBookings" class="tab-content">
             <h5>All bookings will be shown here</h5>
             <div
@@ -211,8 +413,9 @@
             </div>
           </div>
 
+          <!-- QUICK ACTIONS TAB -->
           <div id="tabQuickActions" class="tab-content" style="display: none">
-            <!-- HERO VIDEO CONTROL -->
+            <!-- HERO VIDEO -->
             <div class="mb-4">
               <h3>Hero Video</h3>
               <input
@@ -225,85 +428,54 @@
               </button>
             </div>
 
-            <!-- DESTINATION FORM -->
+            <!-- ADD DESTINATION FORM -->
             <form id="destinationForm">
               <h3>Add Destination</h3>
-
               <input
                 id="destTitle"
                 class="form-control mb-2"
                 placeholder="Title"
+                required
               />
               <input
                 id="destPrice"
                 class="form-control mb-2"
                 placeholder="Price"
+                required
               />
               <input
                 id="destImage"
                 class="form-control mb-2"
-                placeholder="Image/Video URL"
+                placeholder="Main Image/Video URL"
               />
-
               <textarea
                 id="destDescription"
                 class="form-control mb-2"
                 placeholder="Description"
+                rows="3"
               ></textarea>
-
               <input
                 id="destFeatures"
                 class="form-control mb-2"
-                placeholder="Features comma separated"
+                placeholder="Features (comma separated)"
               />
               <input
                 id="destGallery"
                 class="form-control mb-2"
-                placeholder="Gallery URLs comma separated"
+                placeholder="Gallery URLs (comma separated)"
               />
-
-              <button type="submit" class="btn btn-success">Add</button>
+              <button type="submit" class="btn btn-success">
+                Add Destination
+              </button>
             </form>
 
+            <!-- DESTINATIONS LIST -->
             <div class="container my-3">
               <h4>Manage Destinations</h4>
-              <form id="destinationForm" class="mb-3">
-                <div class="row g-2">
-                  <div class="col-12 col-sm-6 col-md-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Title"
-                      id="destTitle"
-                      required
-                    />
-                  </div>
-                  <div class="col-12 col-sm-6 col-md-4">
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Price"
-                      id="destPrice"
-                      required
-                    />
-                  </div>
-                  <div class="col-12 col-sm-12 col-md-4">
-                    <input
-                      type="url"
-                      class="form-control"
-                      placeholder="Image URL"
-                      id="destImage"
-                      required
-                    />
-                  </div>
-                </div>
-                <button type="submit" class="btn btn-success mt-3 w-100">
-                  Add Destination
-                </button>
-              </form>
-              <ul id="destList" class="list-group"></ul>
+              <ul id="destList" class="list-group mt-2"></ul>
             </div>
 
+            <!-- REVIEWS -->
             <div class="container my-4">
               <h4>Manage Reviews</h4>
               <form id="reviewForm" class="mb-3">
@@ -344,11 +516,130 @@
       </div>
     </div>
 
+    <!-- ========== DESTINATION EDIT MODAL ========== -->
+    <div id="destEditModal">
+      <div id="destEditBox">
+        <div class="edit-header">
+          <h4>✏️ Edit Destination</h4>
+          <button class="edit-close-btn" onclick="closeEditModal()">×</button>
+        </div>
+
+        <div class="edit-body">
+          <input type="hidden" id="editDestId" />
+
+          <!-- Basic Info -->
+          <div class="edit-section-title">Basic Information</div>
+
+          <div class="mb-3">
+            <label class="edit-label">Title *</label>
+            <input
+              id="editDestTitle"
+              class="edit-input"
+              type="text"
+              placeholder="Destination title"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="edit-label">Price *</label>
+            <input
+              id="editDestPrice"
+              class="edit-input"
+              type="text"
+              placeholder="e.g. ₹45,000 per person"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="edit-label">Description</label>
+            <textarea
+              id="editDestDescription"
+              class="edit-textarea"
+              rows="4"
+              placeholder="Full description of this destination..."
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="edit-label">Features (comma separated)</label>
+            <input
+              id="editDestFeatures"
+              class="edit-input"
+              type="text"
+              placeholder="Visa support, Hotel stay, Guided tour"
+            />
+          </div>
+
+          <!-- Main Image -->
+          <div class="edit-section-title">Main Image / Video</div>
+          <div id="editMainImagePreview"></div>
+
+          <div
+            class="mb-3"
+            style="display: flex; gap: 8px; align-items: stretch"
+          >
+            <input
+              id="editDestImage"
+              class="edit-input"
+              type="text"
+              placeholder="Image or video URL (.jpg, .png, .mp4)"
+              style="flex: 1"
+            />
+            <button
+              onclick="previewMainImage()"
+              style="
+                padding: 9px 12px;
+                background: #396960;
+                color: #d6b24c;
+                border: none;
+                border-radius: 7px;
+                cursor: pointer;
+                font-size: 0.85rem;
+                white-space: nowrap;
+                font-weight: 600;
+              "
+            >
+              Preview
+            </button>
+          </div>
+
+          <!-- Gallery -->
+          <div class="edit-section-title">Gallery Images / Videos</div>
+
+          <div id="editGalleryContainer"></div>
+
+          <div class="gallery-add-row mb-3">
+            <input
+              id="newGalleryUrl"
+              class="edit-input"
+              type="text"
+              placeholder="Paste image or video URL and click Add"
+            />
+            <button class="gallery-add-btn" onclick="addGalleryItem()">
+              + Add
+            </button>
+          </div>
+
+          <p style="font-size: 0.78rem; color: #888; margin-top: -8px">
+            You can add as many gallery images/videos as you want. Click × on
+            any to remove it.
+          </p>
+
+          <!-- Action Buttons -->
+          <button class="edit-save-btn" onclick="saveDestinationEdit()">
+            💾 Save All Changes
+          </button>
+          <button class="edit-cancel-btn" onclick="closeEditModal()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <footer class="py-4 text-light text-center">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3 flex-wrap">
         <li class="nav-item"><a href="#" class="nav-link px-3">Home</a></li>
-
         <li class="nav-item"><a href="#" class="nav-link px-3">About</a></li>
       </ul>
       <p class="mb-0">© 2025 Aeroswift. All rights reserved.</p>
